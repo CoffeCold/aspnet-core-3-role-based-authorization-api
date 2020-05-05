@@ -27,16 +27,14 @@ namespace WebApi.Services
         private static string[] allowedroles = { "HeroesReader", "HeroesWriter" };
         public UserService(IOptions<AppSettings> appSettings)
         {
-            _appSettings = appSettings.Value;
-
-         
+            _appSettings = appSettings.Value;         
         }
 
         public static User ValidateCredentials(string userName, string password)
         {
             try
             {
-                //new PrincipalContext(ContextType.Domain, "ESTAGIOIT", "CN=Users,DC=estagioit,DC=local");
+                //when connecting to a DC : new PrincipalContext(ContextType.Domain, "ESTAGIOIT", "CN=Users,DC=estagioit,DC=local");
                 //optionally a container (as an LDAP path - a "distinguished" name, full path but without any LDAP:// prefix)
                 using (var adContext = new PrincipalContext(ContextType.Machine, null))
                 {
@@ -50,7 +48,6 @@ namespace WebApi.Services
                         User user = new User();
                         user.WithoutPassword(usr);
 
-
                         //roles
                          PrincipalSearchResult<Principal> groups = usr.GetAuthorizationGroups();
                         user.Roles = GetRoles(groups);
@@ -62,7 +59,6 @@ namespace WebApi.Services
             catch (Exception ex)
             {
                 return null;
-
             }
         }
 

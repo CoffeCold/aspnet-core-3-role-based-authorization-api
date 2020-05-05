@@ -8,7 +8,6 @@ namespace WebApi.Entities
 
     public class Role
     {
-
         public string roletype { get; set; }
      }
 }
