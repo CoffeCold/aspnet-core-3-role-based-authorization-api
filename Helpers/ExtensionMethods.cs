@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
+using System.DirectoryServices.AccountManagement;
 
 namespace WebApi.Helpers
 {
@@ -20,5 +21,17 @@ namespace WebApi.Helpers
             user.Password = null;
             return user;
         }
+        public static User WithoutPassword(this User user, UserPrincipal userPrincipal)
+        {
+            if (userPrincipal == null) return null;
+            if (user == null) return null;
+            user.FirstName = userPrincipal.DisplayName;
+            user.LastName = "";
+            user.Username = userPrincipal.Name;
+            user.Id = 1; 
+            user.Password = null;
+            return user;
+        }
+
     }
 }

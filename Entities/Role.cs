@@ -1,8 +1,14 @@
 namespace WebApi.Entities
 {
-    public static class Role
+    public static class RoleTypes
     {
-        public const string Admin = "Admin";
-        public const string User = "User";
+        public const string HeroesReader = "HeroesReader";
+        public const string HeroesWriter = "HeroesWriter";
     }
+
+    public class Role
+    {
+
+        public string roletype { get; set; }
+     }
 }

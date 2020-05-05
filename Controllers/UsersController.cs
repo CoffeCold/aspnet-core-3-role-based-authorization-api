@@ -11,7 +11,7 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        //a
+ 
         private IUserService _userService;
 
         public UsersController(IUserService userService)
@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = "HeroesWriter")]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         {
             // only allow admins to access other user records
             var currentUserId = int.Parse(User.Identity.Name);
-            if (id != currentUserId && !User.IsInRole(Role.Admin))
+            if (id != currentUserId && !User.IsInRole(RoleTypes.HeroesWriter))
                 return Forbid();
 
             var user =  _userService.GetById(id);

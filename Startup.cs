@@ -18,11 +18,23 @@ namespace WebApi
         }
 
         public IConfiguration Configuration { get; }
+        readonly string AllThinkableOrigins = "_myAllThinkableOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllThinkableOrigins,
+                                  builder =>
+                                  {
+                                      builder.SetIsOriginAllowedToAllowWildcardSubdomains()
+      .WithOrigins("*")
+      .AllowAnyMethod()
+      .AllowAnyHeader()
+      .Build();
+                                  });
+            });
             services.AddControllers();
 
             // configure strongly typed settings objects
